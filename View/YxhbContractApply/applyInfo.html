@@ -1,0 +1,62 @@
+<extend name="Apply:base" />
+
+<block name="content_body">
+
+    <if condition="($apply.stat eq 1) AND (($isApplyer eq 1) OR ($isApplyUser eq 1) OR ($isPasser eq 1) OR ($isCopyto eq 1))">
+        <div class="weui-tab">
+            <div class="weui-tab__panel">
+    </if>
+
+    <div class="weui-panel weui-panel_access">
+        <!-- <div class="weui-panel__hd">审批信息</div> -->
+        <div class="weui-panel__bd">
+            <div class="weui-media-box weui-media-box_small-appmsg">
+                <div class="weui-cells">
+                    <span class="weui-media-box weui-media-box_appmsg">
+                        <div class="weui-media-box__bd">
+                            <div style="display: flex;flex-direction: row;align-items: center;margin-bottom: 1em;">
+                                <img class="weui-media-box__thumb" src="{$avatar}" alt="" style="border-radius: 5px;width: 2.5em;height: 2.5em;margin-right: 1em;">
+                                <h4 class="weui-media-box__title" style="font-weight: 800;font-size:20px;">{$applyer}的{$title}</h4>
+                                <gt name="stat" value="0">
+                                <eq name="apply.stat" value="2">
+                                    <span class="label label-success" style="margin-left: 1em;padding-top: 0.3em;padding-bottom: 0.2em">已通过</span>
+                                </eq>
+                                <eq name="apply.stat" value="1">
+                                    <span class="label label-danger" style="margin-left: 1em;padding-top: 0.3em;padding-bottom: 0.2em">已退审</span>
+                                </eq>
+                                <eq name="apply.stat" value="0">
+                                        <span class="label label-primary" style="margin-left: 1em;padding-top: 0.3em;padding-bottom: 0.2em">审批中</span>
+                                </eq>
+                                </gt>
+                                <eq name="stat" value="0">
+                                    <span class="label label-default" style="margin-left: 1em;padding-top: 0.3em;padding-bottom: 0.2em">已撤销</span>
+                                </eq>
+                            </div>
+                            <volist name="content" id="content">
+                            <p class="weui-media-box__desc">{$content.name}
+                                <span style="color: black;">{$content.value}</span>
+                            </p>
+                            </volist>
+                            <!-- <div style="display: flex;flex-direction: row;flex-wrap: nowrap;align-items: flex-start;">
+                                <p class="weui-media-box__desc" style="white-space:nowrap;overflow: visible;">申请理由：</p>&nbsp;
+                                <p class="weui-media-box__desc" style="color: black;display: block;overflow: visible;">{$apply.reason}</p>
+                            </div> -->
+        <!--                             <p class="weui-media-box__desc">附件详情：
+                                <if condition="$apply.filesrc neq ''">
+                                    <a href="__PUBLIC__/upload/PDFJS/pdfjs/web/viewer.html?file=/fjyxoaSV/Public/upload/html5uploads/{$apply.filesrc}">点击查看</a>
+                                </if>
+                            </p> -->
+                        </div>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <if condition="$apply.imgsrc neq ''">
+        <p style="text-align: center;">
+            <volist name="imgs" id="val">
+                <img src="__PUBLIC__/upload/html5uploads/{$val}" alt="" style="max-width: 95%;" class="imgsrc">
+            </volist>
+        </p>
+    </if>
+</block>

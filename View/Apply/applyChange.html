@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>流程转审</title>
+    <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <!-- 引入 WeUI -->
+    <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/assets/css/weMain.css?version=201709012" />
+    <style type="text/css">
+    .weui-cells:after {
+        border-bottom: 0px solid #fff;
+    }
+
+    .weui-selet__user {
+        width: 2.5em;
+        height: 2.5em;
+        margin-bottom: 5px;
+        margin-right: 16px;
+        border-radius: 5px;
+    }
+
+    .wk-select__user {
+        height: 60px;
+        width: 52px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-right: 6px;
+    }
+    #apply-change {
+        width: 90%;
+        text-decoration: none;
+    }
+    a#apply-change:hover {
+        color: #fff;
+        text-decoration: none;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="weui-toptips weui-toptips_warn js_tooltips">错误提示</div>
+    <div class="container" id="container">
+        <div class="page js_show" style="background-color: white;">
+            <div class="page__bd" style="height: 100%;">
+                <form action="{:U('Light/Apply/saveApplyChange')}" method="post">
+                    <div class="weui-panel" style="margin-top: 0px;">
+                        <div class="weui-panel__hd" style="font-size: 16px;background-color: #f8f8f8;color:black;padding-top: 10px;">转审内容</div>
+                        <div class="weui-panel__bd">
+                            <div class="weui-media-box weui-media-box_small-appmsg" style="padding-bottom: 10px;">
+                                <eq name="isApplyer" value="1">
+                                    <div class="weui-cells" style="margin-top:0px;">
+                                        <div class="weui-cell" style="padding-top: 5px;padding-bottom: 5px;display:flex;flex-direction: column;align-items: flex-start;">
+                                            <div class="weui-cell-hd" style="font-size: 16px;margin-bottom: 0.4em;">转审人</div>
+                                            <div class="weui-cell__bd">
+                                                <div class="weui-uploader">
+                                                    <div class="weui-uploader__bd">
+                                                        <ul class="weui-uploader__files" id="selectUser" style="margin-bottom: 0px;">
+                                                        </ul>
+                                                        <div class="weui-uploader__input-box" style="width: 2.5em;height: 2.5em;margin-right: 0px;margin-bottom: 0px;">
+                                                            <input id="uploaderInput" class="weui-uploader__input" type="button" name="copyto" data-toggle="modal" data-target="#myModal" readonly />
+                                                            <input type="hidden" name="changeto_id" id="changeto_id">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </eq>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="weui-panel" style="margin-top: 0px;">
+                        <div class="weui-panel__hd" style="font-size: 16px;background-color: #f8f8f8;color:black;padding-top: 10px;"></div>
+                        <div class="weui-panel__bd">
+                            <div class="weui-media-box weui-media-box_small-appmsg" style="padding-bottom: 10px;">
+                                <div class="weui-cell">
+                                    <div class="weui-cell__bd" id="cnt">
+                                        <textarea class="weui-textarea" name="reason" id="reason" placeholder="请输入转审理由（必填）" rows="3"></textarea>
+                                        <input type="hidden" name="aid" value="{$aid}">
+                                        <input type="hidden" name="mod_name" value="{$mod_name}">
+                                        <input type="hidden" name="system" value="{$system}">
+                                        <input type="hidden" name="pro_id" value="{$res.pro_id}">
+                                        <input type="hidden" name="app_stage" value="{$res.app_stage}">
+                                        <input type="hidden" name="apply_uid" value="{$apply_uid}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="weui-panel" style="margin-top: 0px;">
+                        <div class="weui-panel__hd" style="font-size: 16px;background-color: #f8f8f8;color:black;padding-top: 10px;"></div>
+                        <div class="weui-panel__bd">
+                            <div class="weui-media-box weui-media-box_small-appmsg" style="padding-bottom: 10px;">
+                                <eq name="isApplyer" value="1">
+                                    <div class="button-sp-area" style="margin-bottom: 20px;display: flex;flex-direction: row;width: 100%;justify-content: space-around;align-items: baseline;}">
+                                        <a id="apply-change" class="weui-btn weui-btn_primary" href="javascript:">提交</a>
+                                    </div>
+                                </eq>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!--BEGIN toast-->
+            <div id="toast" style="display: none;">
+                <div class="weui-mask_transparent"></div>
+                <div class="weui-toast">
+                    <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+                    <p class="weui-toast__content">已完成</p>
+                </div>
+            </div>
+            <!--end toast-->
+            <!-- loading toast -->
+            <div id="loadingToast" style="display:none;">
+                <div class="weui-mask_transparent"></div>
+                <div class="weui-toast">
+                    <i class="weui-loading weui-icon_toast"></i>
+                    <p class="weui-toast__content">数据加载中</p>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" width="100%">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="myModalLabel">选择人员</h4>
+                    </div>
+                    <div class="modal-body" id="select_content" style="padding-top: 0px;padding-bottom: 0px;">
+                        <div class="page js_show" style="position: relative;">
+                            <div class="page__bd">
+                                <!-- <div class="weui-search-bar" id="searchBar">
+                                <form class="weui-search-bar__form">
+                                    <div class="weui-search-bar__box">
+                                        <i class="weui-icon-search"></i>
+                                        <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索" required/>
+                                        <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
+                                    </div>
+                                    <label class="weui-search-bar__label" id="searchText">
+                                        <i class="weui-icon-search"></i>
+                                        <span>搜索</span>
+                                    </label>
+                                </form>
+                                <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
+                            </div> -->
+                                <div class="weui-cells searchbar-result" id="searchResult" style="margin-top: 0px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-success" id="pre-level" data-pid="">上一级</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal END-->
+    </div>
+</body>
+<script src="//cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<!-- <script src="__PUBLIC__/assets/js/vconsole.min.js"></script> -->
+<script>
+// Global var
+var $li_dom = '';
+var loading = '<div class="weui-loadmore"><i class="weui-loading"></i><span class="weui-loadmore__tips">正在加载</span></div>';
+var noresult = '<div class="weui-loadmore weui-loadmore_line"><span class="weui-loadmore__tips">暂无数据</span></div>';
+$(function() {
+    var $selectUser = $("#selectUser");
+
+    function getDepartment(id) {
+        $('#searchResult').empty();
+        $('#searchResult').append(loading);
+        $.post("{:U('Light/Apply/getDeptHtml')}", {
+            "id": id
+        }, function(data) {
+            $('#searchResult').empty();
+            // console.log(data);
+            if (data == '') {
+                $('#searchResult').append(noresult);
+            } else {
+                $('#searchResult').append(data);
+            }
+        });
+    }
+    // Modal
+    $('#myModal').on('show.bs.modal', function(e) {
+        var id = 1;
+        $("#pre-level").attr("data-pid", 0);
+        getDepartment(id);
+    });
+    // select department
+    $("#searchResult").on("click", ".select-department", function() {
+        var id = $(this).attr('data-id');
+        var type = $(this).attr('data-type');
+        // console.log(id);
+        getDepartment(id);
+        $("#pre-level").attr("data-pid", id);
+    });
+    // select department user
+    $("#searchResult").on("click", ".select-user", function() {
+        // var tmpl = '<li class="weui-uploader__file weui-selet__user" style="background-image:url(#url#)" id="#id#"></li>';
+        var tmpl = '<li class="weui-uploader__file wk-select__user" id="#id#"><img src="#url#" class="weui-selet__user" style="margin-bottom: 0px;margin-right: 6px;" data-toggle="modal" data-target="#myModal"/><span style="margin-right: 6px;font-size: 14px;">#name#</span></li>';
+        var id = $(this).attr('data-id');
+        var type = $(this).attr('data-type');
+        var img = $(this).attr('data-img');
+        var name = $(this).attr('data-name');
+        // console.log(id);
+        tmpl = tmpl.replace('#id#', id);
+        tmpl = tmpl.replace('#name#', name);
+        $selectUser.empty();
+        $selectUser.append($(tmpl.replace('#url#', img)));
+        $("#changeto_id").val(id);
+        $(".weui-uploader__input-box").hide();
+        $('#myModal').modal('hide')
+    });
+
+    // up pre-level
+    $("#pre-level").on("click", function() {
+        $('#searchResult').empty();
+        $('#searchResult').append(loading);
+        var pid = $(this).attr("data-pid");
+        // console.log(pid);
+        $.post("{:U('Light/Apply/getParentDeptHtml')}", {
+            "id": pid
+        }, function(data) {
+            $('#searchResult').empty();
+            // console.log(data);
+            if (data == '') {
+                $('#searchResult').append(noresult);
+            } else {
+                $('#searchResult').append(data.html);
+                // console.log(data.pid);
+                $("#pre-level").attr("data-pid", data.pid);
+            }
+        });
+    });
+    // submit
+    // 错误提示
+    var $tooltips = $('.js_tooltips');
+    function tooltip(text) {
+        var text = text;
+        if ($tooltips.css('display') != 'none') return;
+
+        // toptips的fixed, 如果有`animation`, `position: fixed`不生效
+        $('.page.cell').removeClass('slideIn');
+
+        $tooltips.text(text);
+        $tooltips.css('display', 'block');
+        setTimeout(function() {
+            $tooltips.css('display', 'none');
+        }, 2000);
+    }
+
+    $('#apply-change').on('click', function() {
+        var changeto_id = $("#changeto_id").val();
+        var reason = $('#reason').val();
+        var reason_char = reason.length;
+        // console.log(reason);
+        if (changeto_id == '' || changeto_id == null) {
+            tooltip('请选择转审人！');
+            return false;
+        }
+        if (reason_char < 5 || reason_char > 200) {
+            tooltip('申请理由至少5个字，最多200个字！');
+            return false;
+        }
+
+        var $toast = $('#loadingToast');
+        if ($toast.css('display') != 'none') return;
+        $toast.fadeIn(100);
+
+        $("form").submit();
+    });
+
+});
+
+</script>
+
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>{$show.proName}审批流程</title>
+    <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <!-- 引入 WeUI -->
+    <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/assets/css/weMain.css?version=201708232" />
+    <link href="__PUBLIC__/assets/css/wc_select2.min.css?version=20170819" rel="stylesheet" />
+    <style type="text/css">
+        .weui-cells:after {
+            border-bottom: 0px solid #fff;
+        }
+
+        .weui-cell {
+            padding: 0px 15px;
+        }
+
+        .weui-selet__user {
+            width: 2.5em;
+            height: 2.5em;
+            margin-bottom: 5px;
+            margin-right: 16px;
+            border-radius: 5px;
+        }
+
+        .wk-select__user {
+            height: 60px;
+            width: 52px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-right: 6px;
+        }
+
+        .wk-comment__user {
+            height: 60px;
+            width: 52px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-right: 12px;
+        }
+
+        a:hover {
+            text-decoration: none;
+        }
+
+        label {
+            font-weight: 400;
+            margin-bottom: 0px;
+        }
+
+        .select2-results__option {
+            font-size: 16px;
+        }
+
+        .select2-search__field {
+            line-height: normal;
+        }
+
+        .titleTab {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" id="container">
+        <div class="page js_show">
+            <div class="page__bd">
+                <!-- 流程 -->
+                <h3 class="titleTab zhineng">{$show.proName}流程</h3>
+                <div class="zhi">
+                    <volist name="show.data" id="vo">
+                        <div class="weui-cells__title">{$vo.title}</div>
+                        <div class="weui-cells" style="margin-top:0px;">
+                            <div class="weui-cell">
+                                <div class="weui-cell__bd">
+                                    <div class="weui-uploader">
+                                        <div class="weui-uploader__bd" style="height: 85px;">
+                                            <ul class="weui-uploader__files" id="app_pro" style="margin-bottom: 0px;">
+                                                <!-- 为空的情况 -->
+                                                <if condition="$vo.count eq -1">
+                                                    <h1 class="page__title">{$vo.msg}</h1>
+                                                    <else/>
+                                                    <!-- 不为空的情况 -->
+                                                    <volist name="data" id="v">
+
+                                                        <if condition="$i-$vo.count elt 1">
+                                                            <neq name="i" value="1">                                                   
+                                                                <li class='weui-uploader__file wk-select__user' style='height:90px;margin-left:8px'>
+                                                                <else/>
+                                                                <li class='weui-uploader__file wk-select__user' style='height:90px;'>
+                                                            </neq>
+                                                            <img src="{$v.avatar}" class='weui-selet__user' style='margin-bottom: 0px;margin-right: 6px;margin-top:10px;'>
+                                                            <span style='margin-right: 6px;font-size: 14px;'> {$v.name}</span>
+                                                            <if condition="$i-$vo.count elt 0">
+                                                                <span class="glyphicon glyphicon-arrow-right" style="position: relative;top: -2.8em;right: -1.8em;"></span>
+                                                            </if>
+                                                            </li>
+                                                        </if>
+
+                                                    </volist>
+                                                    <!-- 不为空的情况 -->
+                                                </if>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </volist>
+                </div>
+                <!-- 流程 END -->
+                <!-- 推送 -->
+                <h3 class="titleTab">抄送规则</h3>
+                <div class="weui-cells__title">各个中心主管及以上职位的申请抄送</div>
+                <div class="weui-cells" style="margin-top:0px;">
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <div class="weui-uploader">
+                                <div class="weui-uploader__bd" style="height: 85px;">
+                                    <ul class="weui-uploader__files" id="app_pro" style="margin-bottom: 0px;">
+                                    暂无！
+                                        
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 推送 END -->
+                <!-- 权限详情 -->
+                <h3 class="titleTab">权限详情</h3>
+                <div class="weui-media-box weui-media-box_small-appmsg" style="padding-bottom: 10px;">
+
+                        <div class="weui-cells" style="margin-top:0px;">
+                            <div class="weui-cell" style="padding-top: 5px;padding-bottom: 5px;border-bottom: 1px solid #f8f8f8;">
+                                <div class="weui-cell__bd">
+                                    <div class="weui-uploader">
+                                        <div class="weui-uploader__bd">
+                                            <div class="weui-cells weui-cells_form">
+                                                <div class="weui-cell weui-cell_select weui-cell_select-after" style="line-height: 40px">
+                                                    <div class="weui-cell__hd">
+                                                        <label class="weui-label">权限功能&nbsp;&nbsp;
+                                                        </label>
+                                                    </div>
+                                                    <div class="weui-cell__hd">
+                                                        查看{$show.proName}流程详情
+                                                    </div>
+                                                </div>
+                                                <div class="weui-cell weui-cell_select weui-cell_select-after" style="line-height: 40px">
+                                                    <div class="weui-cell__hd">
+                                                        <label class="weui-label">权限范围&nbsp;&nbsp;
+                                                        </label>
+                                                    </div>
+                                                    <div class="weui-cell__hd">
+                                                        {$group.group}
+                                                    </div>
+                                                </div>
+                                                <div class="weui-cell weui-cell_select weui-cell_select-after" style="line-height: 40px">
+                                                    <div class="weui-cell__hd">
+                                                        <label class="weui-label">权限人员&nbsp;&nbsp;
+                                                        </label>
+                                                    </div>
+                                                    <div class="weui-cell__hd">
+                                                        {$group.leaguer}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <!-- 权限详情 END -->
+            </div>
+        </div>
+    </div>
+</body>
+<!-- <script src="__PUBLIC__/assets/js/exif.js"></script> -->
+<script src="//cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script src="https://cdn.bootcss.com/select2/4.0.3/js/select2.min.js"></script>
+<script src="https://cdn.bootcss.com/select2/4.0.3/js/i18n/zh-CN.js"></script>
+<script>
+
+    $(".zhineng").click('on', function () {
+        $(".zhi").toggle(500);
+    });
+
+
+</script>
+
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,height=device-height, user-scalable=no">
+<title>源鑫集团</title>
+</head>
+<body>
+<h1>请登录</h1>
+<form action="{:U('Light/Login/login')}" method="POST">
+	<label>用户名：</label><input type="text" name="username">
+	<label>密码：</label><input type="password" name="password">
+	<label><img width="100" height="40" src="{:U('Login/verify')}"></label><input type="text" name="verify" placeholder="请填写验证码" autocomplete="off">
+	<button type="submit">提交</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>临时额度申请</title>
+    <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <!-- 引入 WeUI -->
+    <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/assets/css/weMain.css?version=201709012" />
+    <link href="__PUBLIC__/assets/css/wc_select2.min.css?version=20170819" rel="stylesheet" />
+    <style type="text/css">
+        .weui-cells:after {
+            border-bottom: 0px solid #fff;
+        }
+
+        .weui-selet__user {
+            width: 2.5em;
+            height: 2.5em;
+            margin-bottom: 5px;
+            margin-right: 16px;
+            border-radius: 5px;
+        }
+
+        .wk-select__user {
+            height: 60px;
+            width: 52px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-right: 6px;
+        }
+
+        .wk-comment__user {
+            height: 60px;
+            width: 52px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-right: 12px;
+        }
+
+        a:hover {
+            text-decoration: none;
+        }
+
+        label {
+            font-weight: 400;
+            margin-bottom: 0px;
+        }
+
+        .select2-results__option {
+            font-size: 16px;
+        }
+
+        .select2-search__field {
+            line-height: normal;
+        }
+
+        /* end */
+
+        .redColor {
+            color: #f12e2e;
+        }
+
+        .greenColor {
+            color: #0de20b;
+        }
+
+        .weui-form-preview__value span {
+            display: inline-block;
+            width: 80px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="weui-toptips weui-toptips_warn js_tooltips" style="opacity: 1;">错误提示</div>
+    <div class="container" id="container">
+        <div class="page js_show">
+            <div class="page__bd">
+                <form action="{:U('WeChat/Leave/saveLeaveApply')}" method="post" enctype="multipart/form-data">
+
+                    <div class="weui-cells weui-cells_form">
+                        <div class="weui-cell ">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label" style="color: #000000">执行时间&nbsp;&nbsp;
+
+                                </label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <input class="weui-input" type="text" name="custodian" readonly value="{$today}" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="weui-cells " id="content1">
+                        <div class="weui-cell weui-cell_select weui-cell_select-after">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label">客户名称&nbsp;&nbsp;
+                                        <span style="color:red;">*</span>
+                                </label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <select class="weui-select" name="user_name[]" id="user_name" multiple="multiple" style="width: 95%;" data-placeholder="请选择客户或拼音缩写">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="weui-cell ">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label">应收余额&nbsp;&nbsp;
+
+                                </label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <input class="weui-input" type="text" name="custodian" id="ysye" readonly placeholder=" 自动填写" />
+                            </div>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label">信用额度&nbsp;&nbsp;
+
+                                </label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <input class="weui-input" type="text" name="custodian" id="line" readonly placeholder=" 自动填写" />
+                            </div>
+
+                        </div>
+                        <div class="weui-cell ">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label">发货余额&nbsp;&nbsp;
+
+                                </label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <input class="weui-input" type="text" name="custodian" id="ye" readonly placeholder=" 自动填写" />
+                            </div>
+                        </div>
+                        <div class="weui-cell ">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label">已有临额&nbsp;&nbsp;
+
+                                </label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <input class="weui-input" type="text" name="custodian" id="exist" readonly placeholder=" 自动填写" />
+                            </div>
+                        </div>
+                        <div class="weui-cell weui-cell_select weui-cell_select-after">
+                                <div class="weui-cell__hd">
+                                    <label class="weui-label">剩余次数&nbsp;&nbsp;
+
+                                    </label>
+                                </div>
+                                <div class="weui-cell__hd">
+                                        <input class="weui-input color" type="text" name="custodian" id="two" readonly  placeholder="临额2万元 - 剩余提交次数" />
+                                        <input class="weui-input color" type="text" name="custodian" id="five" readonly  placeholder="临额5万元 - 剩余提交次数" />
+                                        <input class="weui-input color" type="text" name="custodian" id="ten" readonly   placeholder="临额10万元 - 剩余提交次数" />
+                                </div>
+                            </div>    
+                        </div>
+                    </div>
+
+
+
+                    <div class="weui-cells " id="content2">
+                        <div class="weui-cell weui-cell_select weui-cell_select-after">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label">申请额度&nbsp;&nbsp;
+                                        <span style="color:red;">*</span>
+                                </label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <select class="weui-select iptColor" name="type" id="money">
+                                    <option selected="" value="0">20000</option>
+                                    <option selected="" value="1">50000</option>
+                                    <option selected="" value="2">100000</option>
+                                    <option value='-1' disabled selected style='display:none;'>请选择所需额度</option>
+                                </select>
+                            </div>
+                        </div>
+                    
+                        <!-- <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label" >2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;万&nbsp;&nbsp;
+                                </label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <input class="weui-input color" type="text" name="custodian" id="two" readonly  placeholder="提交次数 - 剩余次数" />
+                            </div>
+
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                    <label class="weui-label" >5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;万&nbsp;&nbsp;
+                                        </label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <input class="weui-input color" type="text" name="custodian" id="five" readonly  placeholder="提交次数 - 剩余次数" />
+                            </div>
+
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                    <label class="weui-label" >10&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;万&nbsp;&nbsp;
+                                        </label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <input class="weui-input color" type="text" name="custodian" id="ten" readonly   placeholder="提交次数 - 剩余次数" />
+                            </div>
+
+                        </div>-->
+                    </div> 
+
+                    <div class="weui-cells weui-cells_form">
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label">申请理由&nbsp;&nbsp;
+                                </label>
+                            </div>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__bd" id="cnt">
+                                <textarea class="weui-textarea" name="reason" id="reason" placeholder="申请理由至少5个字(必填);
+金额-有效期-有效次数;
+2万-3天-5次/月;
+5万-5天-3次/月;
+10万-7天-1次/月" rows="5"></textarea>
+                                <div class="weui-textarea-counter">
+                                    <span id="reason_char">0</span>/200</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="weui-cells__title">审批流程
+                            <a href="{:U('Light/Process/ApplyProcess',array('modname'=>'TempCreditLineApply'))}">（查看可视化流程）</a>
+                    </div>
+                    <div id="allproc">
+                        <div class="weui-cells" style="margin-top:0px;">
+                            <div class="weui-cell">
+                                <div class="weui-cell__bd">
+                                    <div class="weui-uploader">
+                                        <div class="weui-uploader__bd" style="height: 85px;">
+                                            <ul class="weui-uploader__files" id="app_pro" style="margin-bottom: 0px;">
+                                                
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="weui-cells__title">抄送（点击+手动添加抄送人）</div>
+                    <div class="weui-cells" style="margin-top:0px;">
+                        <div class="weui-cell" style="padding-top: 0px;padding-bottom: 5px;margin-bottom: 10px;">
+                            <div class="weui-cell__bd">
+                                <div class="weui-uploader">
+                                    <div class="weui-uploader__bd">
+                                        <ul class="weui-uploader__files" id="selectUser" style="margin-bottom: 0px;">
+                                            
+                                            
+                                        </ul>
+                                        <div class="weui-uploader__input-box" style="width: 2.5em;height: 2.5em;margin-right: 0px;margin-bottom: 0px;margin-top:10px;">
+                                            <input id="uploaderInput" class="weui-uploader__input" type="button" name="copyto" data-toggle="modal" data-target="#myModal" readonly />
+                                            <if condition="$prevId eq '' or $prevId eq null">
+                                                <input type="hidden" name="copyto_id" id="copyto_id">
+                                                <else/>
+                                                <input type="hidden" name="copyto_id" id="copyto_id" value=",{$weixinUserId}">
+                                            </if>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="weui-btn-area">
+                        <input type="hidden" name="file_names" id="file_names">
+                        <a class="weui-btn weui-btn_primary" href="javascript:" id="submit">提交</a>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <div id="dialogs">
+        <!--BEGIN dialog2-->
+        <div class="js_dialog" id="iosDialog2" style="display: none;">
+            <div class="weui-mask"></div>
+            <div class="weui-dialog">
+                <div class="weui-dialog__bd">客户提货余额超过1万，可以不用增加临时额度！</div>
+                <div class="weui-dialog__ft">
+                    <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary">知道了</a>
+                </div>
+            </div>
+        </div>
+        <!--END dialog2-->
+    </div>
+    <!--BEGIN toast-->
+    <div id="loadingToast" style=" display: none;">
+        <div class="weui-mask_transparent"></div>
+        <div class="weui-toast">
+            <i class="weui-loading weui-icon_toast"></i>
+            <p class="weui-toast__content">数据提交中</p>
+        </div>
+    </div>
+    <!--end toast-->
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" width="100%">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="myModalLabel">选择人员</h4>
+                    </div>
+                    <div class="modal-body" id="select_content" style="padding-top: 0px;padding-bottom: 0px;">
+                        <div class="page js_show" style="position: relative;">
+                            <div class="page__bd">
+                                <!-- <div class="weui-search-bar" id="searchBar">
+                                    <form class="weui-search-bar__form">
+                                        <div class="weui-search-bar__box">
+                                            <i class="weui-icon-search"></i>
+                                            <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索" required/>
+                                            <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
+                                        </div>
+                                        <label class="weui-search-bar__label" id="searchText">
+                                            <i class="weui-icon-search"></i>
+                                            <span>搜索</span>
+                                        </label>
+                                    </form>
+                                    <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
+                                </div> -->
+                                <div class="weui-cells searchbar-result" id="searchResult" style="margin-top: 0px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-success" id="pre-level" data-pid="">上一级</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal END-->
+        <!--BEGIN dialog-->
+        <div id="dialogs">
+            <div class="js_dialog" id="iosDialog" style="display: none;">
+                <div class="weui-mask"></div>
+                <div class="weui-dialog">
+                    <div class="weui-dialog__hd"><strong class="weui-dialog__title">是否删除抄送人</strong></div>
+                    <div class="weui-dialog__ft">
+                        <a href="javascript:;" onclick="dialog_close()" class="weui-dialog__btn weui-dialog__btn_default">取消</a>
+                        <a href="javascript:;" onclick="dialog_confirm()" class="weui-dialog__btn weui-dialog__btn_primary">确认</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END dialog -->
+</body>
+<script src="//cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script src="https://cdn.bootcss.com/select2/4.0.3/js/select2.min.js"></script>
+<script src="https://cdn.bootcss.com/select2/4.0.3/js/i18n/zh-CN.js"></script>
+<script src="__PUBLIC__/assets/js/vconsole.min.js"></script>
+<script>
+    var user_name = $('#user_name'),
+        user_id = 0, tjinfo = '';
+        exist = $('#exist'),
+        line = $('#line'),
+        ye = $('#ye'),
+        ysye = $('#ysye'),
+        two = $('#two'),
+        five = $('#five'),
+        ten = $('#ten'),
+        twoTime = 0,
+        fiveTime = 0,
+        tenTime = 0,
+        $tooltips = $('.js_tooltips'),
+        $iosDialog2 = $('#iosDialog2'),
+        money = $('#money'),
+        toast = $('#loadingToast'),
+        app_pro = $('#app_pro');
+    var appflow = {$appflow};
+
+    // diog提示
+    $('#dialogs').on('click', '.weui-dialog__btn', function () {
+        $(this).parents('.js_dialog').fadeOut(200);
+    });
+    // 错误提示
+    function tooltip(text) {
+        if ($tooltips.css('display') != 'none') return;
+
+        // toptips的fixed, 如果有`animation`, `position: fixed`不生效
+        $('.page.cell').removeClass('slideIn');
+
+        $tooltips.text(text);
+        $tooltips.css('display', 'block');
+        setTimeout(function () {
+            $tooltips.css('display', 'none');
+        }, 2000);
+    }
+    // 选择临时额度
+    money.change(function () {
+        if (user_id == 0) {
+            tooltip('请选择用户');
+            money.val(-1);
+            $('#detail').html(html);
+        }
+        var val = $(this).val(),html = '';
+         if(val !=0) html = app_proHtml(val);
+        app_pro.html(html);
+    });
+
+    // 审批流程显示
+    function app_proHtml(val){
+        var html = '';
+        for(i=0;i<val;i++){
+            html += "<li class='weui-uploader__file wk-select__user' id='"+appflow[i]['id']+"' style='height:90px;";        
+            if(i != 0) html+= "margin-left:8px";
+            html += "'><img src='"+appflow[i]['avatar']+"' class='weui-selet__user' style='margin-bottom: 0px;margin-right: 6px;margin-top:10px;'>"+
+                             "<span style='margin-right: 6px;font-size: 14px;'>"+appflow[i]['name']+"</span>";
+            if(val == 2 && i<val-1){
+                html+="<span class='glyphicon glyphicon-arrow-right' style='position: relative;top: -2.8em;right: -1.8em;'></span>";
+            }                    
+            html +=  "</li>";
+        }
+        return html;
+    }
+
+
+    $(function () {
+        // 用户选择
+        function formatRepo(repo) { return repo.text; }
+
+        function formatRepoSelection(repo) { return repo.text }
+        $("#user_name").select2({
+            ajax: {
+                url: "{:U('Light/TempQuote/getCustomerList')}",
+                dataType: 'json',
+                delay: 350,
+                data: function (params) {
+                    return {
+                        math: params.term,
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                },
+                cache: true
+            },
+            escapeMarkup: function (markup) { return markup; },
+            minimumInputLength: 0,
+            minimumResultsForSearch: 9,
+            // allowClear: true,
+            language: "zh-CN",
+            templateResult: formatRepo,
+            templateSelection: formatRepoSelection
+        });
+
+        // select2 点击触发
+        $("#user_name").on("select2:selecting", function (e) {
+            $('.select2-selection__choice__remove').click();
+            var selectArr = e.params.args.data;
+            selectArr.text = selectArr.jc;
+                
+            $('.select2-selection__choice').text(selectArr.text);
+            getTempInfo(selectArr.id);
+            user_id = selectArr.id;
+
+            money.val('-1');
+        });
+        $("#user_name").on("select2:unselecting", function (e) {
+            app_pro.html('');
+            $('.color').val('');
+            user_id = 0;
+        });
+
+    });
+
+    // 获取客户用户 各项余额
+    function getTempInfo(user_id) {
+        $.ajax({
+            url: "{:U('Light/TempQuote/getCustomerInfo')}",
+            dataType: 'json',
+            data: {
+                user_id: user_id
+            },
+            dataType: 'json',
+            success: function (res) {
+                if (res.code != 200) {
+                    tooltip('请重新刷新页面！')
+                } else {
+                    var data = res.data, info = data.info, classNmae = 'redColor';
+                    exist.val(data.exist);
+                    line.val(data.line);
+                    ye.val(data.ye);
+                    ysye.val(data.ysye);
+                    if (parseFloat(data.ysye) >= 0) classNmae = 'greenColor';
+
+                    ysye.removeClass('redColor greenColor').addClass(classNmae);
+                    if (data.fhye >= 10000) {
+                        $iosDialog2.fadeIn(200);
+                    }
+
+                    twoTime = info[0].length;
+                    fiveTime = info[1].length;
+                    tenTime = info[2].length;
+                    $('.color').removeClass('redColor greenColor');
+                    
+                    moneyHtml();
+                    if(5-twoTime>0){
+                        two.addClass('greenColor')
+                    }else{
+                        two.addClass('redColor');
+                        $('#money option[value="0"]');
+                    }
+                    
+                    if(3-fiveTime>0){
+                        five.addClass('greenColor')
+                    }else{
+                        five.addClass('redColor');
+                        $('#money option[value="1"]').remove();
+
+                    }
+                    if(1-tenTime>0){
+                        ten.addClass('greenColor')
+                    }else{
+                        ten.addClass('redColor');
+                        $('#money option[value="2"]').remove();
+                    }
+                    
+                    two.val('临额二万元 - 剩余'+(5-twoTime)+'次提交');
+                    five.val('临额五万元 - 剩余'+(3-fiveTime)+'次提交');
+                    ten.val('临额十万元 - 剩余'+(1-tenTime)+'次提交'); 
+                }
+            }
+        })
+
+    }
+
+    // 提交申请
+    $('#submit').click(function () {
+        
+        if (user_id == 0) {
+            tooltip('请选择用户');
+            return;
+        }
+
+        if ($('#money')[0].value == -1) {
+            tooltip('请选择增加的额度');
+            return;
+        }
+        // 2w 判断
+        if ($('#money')[0].value == 0 && twoTime >= 5) {
+            tooltip('本月2W临时额度增加次数已达上限！');
+            return;
+        }
+        // 5w 判断
+        if ($('#money')[0].value == 1 && fiveTime >= 3) {
+            tooltip('本月3W临时额度增加次数已达上限！');
+            return;
+        }
+        // 2w 判断
+        if ($('#money')[0].value == 2 && tenTime >= 1) {
+            tooltip('本月10W临时额度增加次数已达上限！');
+            return;
+        }
+        // 留言判断
+        var reason = $('#reason').val();
+        if (reason.length < 5) {
+            tooltip('申请理由不得少于5个字！');
+            return;
+        }
+        if (reason.length > 200) {
+            tooltip('申请理由不得超过200个字！');
+            return;
+        }
+       
+        toast.fadeIn(200);
+        $.ajax({
+            type:'POST',
+            url: "{:U('Light/TempQuote/addtempQuote')}",
+            dataType: 'json',
+            data: {
+                user_id: user_id,
+                text: reason,
+                money: money.val(),
+                copyto_id:$("#copyto_id").val()
+            },
+            dataType: 'json',
+            success: function (res) {
+                toast.fadeOut(200);
+                if (res.code == 200) {
+                    window.location.href = "{:U('Light/Apply/applyInfo',array('modname'=>'TempCreditLineApply','system'=>'yxhb'))}"+"&aid="+res.aid;
+                } else {
+                    tooltip(res.msg);
+                }
+            }
+        });
+
+    });
+ // 选择重置
+ function moneyHtml(){
+    var html = '<option selected="" value="0">20000</option>'+
+            '<option selected="" value="1">50000</option>'+
+            '<option selected="" value="2">100000</option>'+
+            '<option value="-1" disabled selected style="display:none;">请选择所需额度</option>';
+      money.html(html);
+ }
+
+ // 抄送
+ var loading = '<div class="weui-loadmore"><i class="weui-loading"></i><span class="weui-loadmore__tips">正在加载</span></div>';
+ var noresult = '<div class="weui-loadmore weui-loadmore_line"><span class="weui-loadmore__tips">暂无数据</span></div>';
+ var $selectUser = $("#selectUser");
+ // Modal
+    $('#myModal').on('show.bs.modal', function (e) {
+        var id = 1;
+        $("#pre-level").attr("data-pid", 0);
+        getDepartment(id);
+    });
+
+    function getDepartment(id) {
+        $('#searchResult').empty();
+        $('#searchResult').append(loading);
+        $.post("{:U('Light/Apply/getDeptHtml')}",
+                {
+                    "id":id
+                },function(data){
+                    $('#searchResult').empty();
+                    // console.log(data);
+                    if (data=='') {
+                        $('#searchResult').append(noresult);
+                    } else {
+                        $('#searchResult').append(data);
+                    }
+                }
+        );
+    }
+    // up pre-level
+    $("#pre-level").on("click", function () {
+        $('#searchResult').empty();
+        $('#searchResult').append(loading);
+        var pid = $(this).attr("data-pid");
+        // console.log(pid);
+        $.post("{:U('Light/Apply/getParentDeptHtml')}",
+            {
+                "id": pid
+            }, function (data) {
+                $('#searchResult').empty();
+                // console.log(data);
+                if (data == '') {
+                    $('#searchResult').append(noresult);
+                } else {
+                    $('#searchResult').append(data.html);
+                    // console.log(data.pid);
+                    $("#pre-level").attr("data-pid", data.pid);
+                }
+            }
+        );
+    });
+    // select department
+    $("#searchResult").on("click", ".select-department", function () {
+        var id = $(this).attr('data-id');
+        var type = $(this).attr('data-type');
+        // console.log(id);
+        getDepartment(id);
+        $("#pre-level").attr("data-pid", id);
+    });
+    // select department user
+    $("#searchResult").on("click", ".select-user", function () {
+        // var tmpl = '<li class="weui-uploader__file weui-selet__user" style="background-image:url(#url#)" id="#id#"></li>';
+        var tmpl = '<li class="weui-uploader__file wk-select__user" id="#id#" style="height:90px;"><img src="#url#" class="weui-selet__user" style="margin-bottom: 0px;margin-right: 6px;margin-top:10px;" /><span style="margin-right: 6px;font-size: 14px;">#name#</span><span class="weui-badge" style="position: relative;top: -5.8em;right: -1.4em;">X</span></li>';
+        var id = $(this).attr('data-id');
+        var type = $(this).attr('data-type');
+        var img = $(this).attr('data-img');
+        var name = $(this).attr('data-name');
+        var ids = $("#copyto_id").val() + "," + id;
+        // console.log(id);
+        tmpl = tmpl.replace('#id#', id);
+        tmpl = tmpl.replace('#name#', name);
+        $selectUser.append($(tmpl.replace('#url#', img)));
+        $("#copyto_id").val(ids);
+        $('#myModal').modal('hide')
+    });
+    // delete copyto user
+    $("#selectUser").on("click", ".wk-select__user", function () {
+        $li_dom = $(this);
+        $("#iosDialog").fadeIn(200);
+    });
+
+        // Close dialog
+        function dialog_close() {
+        $("#iosDialog").fadeOut(100);
+    }
+    // Confirm dialog
+    function dialog_confirm() {
+        var id = $li_dom.attr("id");
+        // console.log(id);
+        var ids = $("#copyto_id").val() + ",";
+        var old_ids_arr = ids.split(",");
+        var id_str = '';
+        var location = $.inArray(id, old_ids_arr);
+        // // console.log(old_name_arr);
+        if (location >= 0) {
+            var repl_id = ',' + id + ',';
+            id_str = ids.replace(repl_id, ',');
+        }
+        $("#copyto_id").val(id_str);
+        $li_dom.remove();
+        $("#iosDialog").fadeOut(100);
+    }
+</script>
+
+</html>

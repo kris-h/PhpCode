@@ -1,0 +1,117 @@
+<extend name="Apply:base" />
+
+<block name="content_body">
+
+    <if condition="($apply.stat eq 1) AND (($isApplyer eq 1) OR ($isApplyUser eq 1) OR ($isPasser eq 1) OR ($isCopyto eq 1))">
+        <div class="weui-tab">
+            <div class="weui-tab__panel">
+    </if>
+    <div class="weui-panel weui-panel_access">
+        <!-- <div class="weui-panel__hd">审批信息</div> -->
+        <div class="weui-panel__bd">
+            <div class="weui-media-box weui-media-box_small-appmsg">
+                <div class="weui-cells">
+                    <span class="weui-media-box weui-media-box_appmsg">
+                        <div class="weui-media-box__bd">
+                            <div style="display: flex;flex-direction: row;align-items: center;margin-bottom: 1em;">
+                                <img class="weui-media-box__thumb" src="{$avatar}" alt="" style="border-radius: 5px;width: 2.5em;height: 2.5em;margin-right: 1em;">
+                                <h4 class="weui-media-box__title" style="font-weight: 800;font-size:20px;">{$applyer}的{$title|str_replace="表",'',###}</h4>
+                                <gt name="stat" value="0">
+                                    <eq name="apply.stat" value="2">
+                                        <span class="label label-success" style="margin-left: 1em;padding-top: 0.3em;padding-bottom: 0.2em">已通过</span>
+                                    </eq>
+                                    <eq name="apply.stat" value="1">
+                                        <span class="label label-danger" style="margin-left: 1em;padding-top: 0.3em;padding-bottom: 0.2em">已退审</span>
+                                    </eq>
+                                    <eq name="apply.stat" value="0">
+                                        <span class="label label-primary" style="margin-left: 1em;padding-top: 0.3em;padding-bottom: 0.2em">审批中</span>
+                                    </eq>
+                                </gt>
+                                <eq name="stat" value="0">
+                                    <span class="label label-default" style="margin-left: 1em;padding-top: 0.3em;padding-bottom: 0.2em">已撤销</span>
+                                </eq>
+                            </div>
+
+                            <div style="display: flex;flex-direction: row;flex-wrap: nowrap;align-items: flex-start;">
+                                <p class="weui-media-box__desc" style="white-space:nowrap;overflow: visible;">执行时间：</p>&nbsp;
+                                <p class="weui-media-box__desc" style="color: black;display: block;overflow: visible;">{$content.date}</p>
+                            </div>
+                            <div style="display: flex;flex-direction: row;flex-wrap: nowrap;align-items: flex-start;">
+                                <p class="weui-media-box__desc" style="white-space:nowrap;overflow: visible;">客户名称：</p>&nbsp;
+                                <p class="weui-media-box__desc" style="color: black;display: block;overflow: visible;">{$content.clientname}</p>
+                            </div>
+                            <div style="display: flex;flex-direction: row;flex-wrap: nowrap;align-items: flex-start;">
+                                <p class="weui-media-box__desc" style="white-space:nowrap;overflow: visible;">应收余额：</p>&nbsp;
+                                <egt name="content.info.ye" value="0">
+                                    <p class="weui-media-box__desc" style="color: #f12e2e;display: block;overflow: visible;">-{$content.info.ye}</p>
+                                    <else/>
+                                    <p class="weui-media-box__desc" style="color: #0de20b;display: block;overflow: visible;">-{$content.info.ye}</p>
+                                </egt>
+                            </div>
+                            <div style="display: flex;flex-direction: row;flex-wrap: nowrap;align-items: flex-start;">
+                                <p class="weui-media-box__desc" style="white-space:nowrap;overflow: visible;">信用额度：</p>&nbsp;
+                                <p class="weui-media-box__desc" style="color: black;display: block;overflow: visible;">{$content.info.line}</p>
+                            </div>
+                            <div style="display: flex;flex-direction: row;flex-wrap: nowrap;align-items: flex-start;">
+                                <p class="weui-media-box__desc" style="white-space:nowrap;overflow: visible;">发货余额：</p>&nbsp;
+                                <p class="weui-media-box__desc" style="color: black;display: block;overflow: visible;">{$content.ye}</p>
+                            </div>
+                            <div style="display: flex;flex-direction: row;flex-wrap: nowrap;align-items: flex-start;">
+                                <p class="weui-media-box__desc" style="white-space:nowrap;overflow: visible;">已有临额：</p>&nbsp;
+                                <p class="weui-media-box__desc" style="color: black;display: block;overflow: visible;">{$content.ed}</p>
+                            </div>
+
+                            <div style="display: flex;flex-direction: row;flex-wrap: nowrap;align-items: flex-start;">
+                                <p class="weui-media-box__desc" style="white-space:nowrap;overflow: visible;">剩余次数：</p>&nbsp;
+                                <p class="weui-media-box__desc" style="color: black;display: block;overflow: visible;">
+                                    <neq name="content.info.two" value="0">
+                                        <input class="weui-input color" type="text" style="color:#0de20b" name="custodian" id="two" readonly value="临额二万元 - 剩余{$content.info.two}次提交"
+                                        />
+                                    </neq>
+                                    <eq name="content.info.two" value="0">
+                                        <input class="weui-input color" type="text" style="color:#f12e2e" name="custodian" id="two" readonly value="临额二万元 - 剩余{$content.info.two}次提交"
+                                        />
+                                    </eq>
+
+                                    <neq name="content.info.five" value="0">
+                                        <input class="weui-input color" type="text" style="color:#0de20b" name="custodian" id="two" readonly value="临额五万元 - 剩余{$content.info.five}次提交"
+                                        />
+                                    </neq>
+                                    <eq name="content.info.five" value="0">
+                                        <input class="weui-input color" type="text" style="color:#f12e2e" name="custodian" id="two" readonly value="临额五万元 - 剩余{$content.info.five}次提交"
+                                        />
+                                    </eq>
+
+                                    <neq name="content.info.ten" value="0">
+                                        <input class="weui-input color" type="text" style="color:#0de20b" name="custodian" id="two" readonly value="临额十万元 - 剩余{$content.info.ten}次提交"
+                                        />
+                                    </neq>
+                                    <eq name="content.info.ten" value="0">
+                                        <input class="weui-input color" type="text" style="color:#f12e2e" name="custodian" id="two" readonly value="临额十万元 - 剩余{$content.info.ten}次提交"
+                                        />
+                                    </eq>
+                                </p>
+                            </div>
+
+                            <div style="display: flex;flex-direction: row;flex-wrap: nowrap;align-items: flex-start;">
+                                <p class="weui-media-box__desc" style="white-space:nowrap;overflow: visible;">申请额度：</p>&nbsp;
+                                <p class="weui-media-box__desc" style="color: black;display: block;overflow: visible;">{$content.line}</p>
+                            </div>
+                            <div style="display: flex;flex-direction: row;flex-wrap: nowrap;align-items: flex-start;">
+                                <p class="weui-media-box__desc" style="white-space:nowrap;overflow: visible;">申请理由：</p>&nbsp;
+                                <p class="weui-media-box__desc" style="color: black;display: block;overflow: visible;">{$content.notice}</p>
+                            </div>
+                        </div>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <if condition="$apply.imgsrc neq ''">
+        <p style="text-align: center;">
+            <volist name="imgs" id="val">
+                <img src="__PUBLIC__/upload/html5uploads/{$val}" alt="" style="max-width: 95%;" class="imgsrc">
+            </volist>
+        </p>
+    </if>
+</block>
